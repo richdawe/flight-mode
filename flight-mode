@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This requires the urfkill package to be installed.
+# urkfill will persist the wifi/etc. killswitch over a reboot,
+# unlike pure rfkill or the Ubuntu settings.
+
+flag=false
+if [ -z "$1" -o "$1" = "on" ]; then
+  flag=true
+else
+  flag=false
+fi
+
+gdbus call -y -d org.freedesktop.URfkill -o /org/freedesktop/URfkill -m org.freedesktop.URfkill.Block 0 $flag
+
+rfkill list
+
